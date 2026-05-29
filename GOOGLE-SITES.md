@@ -17,26 +17,44 @@ Google Sites cannot run this project’s JavaScript, CSS, or FAQ data by itself.
 App Store / user browser
         │
         ▼
-https://sites.google.com/view/your-site/kryptos-support   ← Support URL in App Store Connect
+https://sites.google.com/view/info-kryptos/kryptos-support   ← Support URL in App Store Connect
         │
-        └── iframe embed ──► https://you.github.io/DeveloperSupportSite/kryptos/index.html
+        └── iframe embed ──► https://saichandakkineni.github.io/Kryptos-issues/kryptos/index.html
 ```
 
 **Important:** In App Store Connect, enter the **Google Sites** URLs, not the GitHub Pages URLs.
 
 ---
 
+## Your progress (Kryptos)
+
+| Item | Value |
+|------|--------|
+| Google Sites site | [info-kryptos](https://sites.google.com/view/info-kryptos) |
+| Home | […/home](https://sites.google.com/view/info-kryptos/home) |
+| Support page | […/kryptos-support](https://sites.google.com/view/info-kryptos/kryptos-support) |
+| Privacy page | […/kryptos-privacy](https://sites.google.com/view/info-kryptos/kryptos-privacy) |
+| GitHub repo | [saichandakkineni/Kryptos-issues](https://github.com/saichandakkineni/Kryptos-issues) |
+| Embed host (GitHub Pages) | `https://saichandakkineni.github.io/Kryptos-issues` |
+| Support embed URL | `https://saichandakkineni.github.io/Kryptos-issues/kryptos/index.html` |
+| Privacy embed URL | `https://saichandakkineni.github.io/Kryptos-issues/kryptos/privacy.html` |
+| Support email | `kryptos.enquiry@gmail.com` |
+
+GitHub Pages deploy workflow is on `main`. **First run failed** until Pages is enabled — finish **Step 6** below, then re-run the workflow.
+
+---
+
 ## Checklist (tick as you go)
 
-- [ ] **Step 1** — Plan site name and page slugs  
-- [ ] **Step 2** — Create empty Google Site  
-- [ ] **Step 3** — Edit `data/site-config.json` (first pass)  
-- [ ] **Step 4** — Install Node and build locally  
-- [ ] **Step 5** — Create GitHub repo and push code  
-- [ ] **Step 6** — Turn on GitHub Pages (Actions)  
-- [ ] **Step 7** — Update `embedHost` in config and rebuild  
-- [ ] **Step 8** — Create three Google Sites pages with embeds  
-- [ ] **Step 9** — Publish Google Sites  
+- [x] **Step 1** — Plan site name and page slugs  
+- [x] **Step 2** — Create Google Site and pages (`home`, `kryptos-support`, `kryptos-privacy`)  
+- [x] **Step 3** — Edit `data/site-config.json` (first pass)  
+- [x] **Step 4** — Install Node and build locally  
+- [x] **Step 5** — Push code to [Kryptos-issues](https://github.com/saichandakkineni/Kryptos-issues) (includes deploy workflow)  
+- [ ] **Step 6** — Turn on GitHub Pages (Actions) and confirm deploy succeeds — **you are here**  
+- [x] **Step 7** — `embedHost` set to `https://saichandakkineni.github.io/Kryptos-issues` (in repo; CI rebuilds on push)  
+- [ ] **Step 8** — Add iframe embeds on Google Sites pages (after Step 6 URLs work)  
+- [ ] **Step 9** — Publish Google Sites (if not already public)  
 - [ ] **Step 10** — Activate FormSubmit email  
 - [ ] **Step 11** — Test everything  
 - [ ] **Step 12** — Paste URLs into App Store Connect  
@@ -204,30 +222,40 @@ Install Node from [https://nodejs.org](https://nodejs.org), quit and reopen Term
 
 ## Step 5 — Put the project on GitHub
 
-### 5.1 Create a new repository on GitHub
+**Done for this project.** Repo: [github.com/saichandakkineni/Kryptos-issues](https://github.com/saichandakkineni/Kryptos-issues) · branch `main`.
+
+To push future changes from your Mac:
+
+```bash
+cd /Users/saichandakkineni/Automation-Utilities/DeveloperSupportSite
+git add .
+git commit -m "Describe your change"
+git push origin main
+```
+
+### 5.1 Create a new repository (reference only)
+
+Skip if you already use **Kryptos-issues**.
 
 1. Go to [https://github.com/new](https://github.com/new).
-2. **Repository name:** `DeveloperSupportSite` (or your choice — then update `embedHost` accordingly).
+2. **Repository name:** e.g. `Kryptos-issues`.
 3. **Public** repository (required for free Pages on free accounts).
 4. Do **not** add a README, .gitignore, or license (you already have files locally).
 5. Click **Create repository**.
 
-### 5.2 Push your local folder
-
-In Terminal (replace `YOUR_GITHUB_USERNAME` and repo name if different):
+### 5.2 Push your local folder (reference only)
 
 ```bash
 cd /Users/saichandakkineni/Automation-Utilities/DeveloperSupportSite
-
 git init
 git add .
 git commit -m "Initial commit: Kryptos developer support site"
 git branch -M main
-git remote add origin https://github.com/YOUR_GITHUB_USERNAME/DeveloperSupportSite.git
+git remote add origin https://github.com/saichandakkineni/Kryptos-issues.git
 git push -u origin main
 ```
 
-If Git asks you to sign in, use GitHub’s browser login or a [Personal Access Token](https://github.com/settings/tokens) as the password.
+If Git asks you to sign in, use GitHub’s browser login or a [Personal Access Token](https://github.com/settings/tokens) with **repo** and **workflow** scopes.
 
 ---
 
@@ -235,42 +263,38 @@ If Git asks you to sign in, use GitHub’s browser login or a [Personal Access T
 
 This repo includes a workflow that builds and publishes `dist-google-sites/` on every push to `main`.
 
-1. On GitHub, open your repo → **Settings** → **Pages** (left sidebar).
-2. Under **Build and deployment** → **Source**, choose **GitHub Actions**.
-3. Go to the **Actions** tab → open the workflow **Deploy Google Sites embed**.
-4. If it did not run automatically, click **Run workflow** → **Run workflow**.
-5. Wait until the run shows a green checkmark (about 1–2 minutes).
-6. Return to **Settings** → **Pages**. You should see a live URL, e.g.  
-   `https://YOUR_GITHUB_USERNAME.github.io/DeveloperSupportSite/`
+The workflow [already ran once](https://github.com/saichandakkineni/Kryptos-issues/actions) but **deploy failed** because GitHub Pages was not enabled yet. Complete the steps below, then re-run it.
+
+1. Open [Kryptos-issues → Settings → Pages](https://github.com/saichandakkineni/Kryptos-issues/settings/pages).
+2. Under **Build and deployment** → **Source**, choose **GitHub Actions** (not “Deploy from a branch”).
+3. Go to [Actions](https://github.com/saichandakkineni/Kryptos-issues/actions) → **Deploy Google Sites embed** → **Re-run all jobs** (or **Run workflow**).
+4. Wait until the run shows a **green** checkmark (about 1–2 minutes).
+5. Return to **Settings** → **Pages**. You should see:  
+   `https://saichandakkineni.github.io/Kryptos-issues/`
 
 ### Verify the host works
 
-Open these in your browser (replace with your username/repo):
+Open these in your browser:
 
-- `https://YOUR_GITHUB_USERNAME.github.io/DeveloperSupportSite/index.html`
-- `https://YOUR_GITHUB_USERNAME.github.io/DeveloperSupportSite/kryptos/index.html`
-- `https://YOUR_GITHUB_USERNAME.github.io/DeveloperSupportSite/kryptos/privacy.html`
+- [index.html](https://saichandakkineni.github.io/Kryptos-issues/index.html)
+- [kryptos/index.html](https://saichandakkineni.github.io/Kryptos-issues/kryptos/index.html)
+- [kryptos/privacy.html](https://saichandakkineni.github.io/Kryptos-issues/kryptos/privacy.html)
 
-You should see the styled support/privacy pages. If you get **404**, wait a few minutes and refresh, or check the Actions log for errors.
+You should see the styled support/privacy pages. If you get **404**, finish enabling Pages in step 2 above, re-run the workflow, wait 2–5 minutes, and refresh.
 
 ---
 
 ## Step 7 — Set `embedHost` and rebuild
 
-1. Open `data/site-config.json`.
-2. Set `googleSites.embedHost` to your **exact** GitHub Pages URL (no trailing slash), e.g.  
-   `"embedHost": "https://johndoe.github.io/DeveloperSupportSite"`
-3. Save, then in Terminal:
+**Done.** `data/site-config.json` already has:
 
-```bash
-cd /Users/saichandakkineni/Automation-Utilities/DeveloperSupportSite
-git add data/site-config.json
-git commit -m "Set GitHub Pages embed host URL"
-git push
+```json
+"embedHost": "https://saichandakkineni.github.io/Kryptos-issues"
 ```
 
-4. Wait for the GitHub Action to finish (Actions tab → green check).
-5. Hard-refresh the three test URLs from Step 6.
+Every push to `main` rebuilds via GitHub Actions. To change URLs later, edit `site-config.json`, commit, and push.
+
+After Step 6 succeeds, hard-refresh the three test URLs from Step 6.
 
 Navigation links inside the embed now point to your Google Sites pages (once those exist and match `siteUrl` + `pages`).
 
@@ -284,11 +308,11 @@ For each row below, open the matching Google Sites page and insert an iframe.
 
 1. [Google Sites](https://sites.google.com) → your site → open **Home**.
 2. **Insert** → **Embed** → choose **Embed code** (wording may vary).
-3. Paste (replace `YOUR_GITHUB_USERNAME` and repo name):
+3. Paste:
 
 ```html
 <iframe
-  src="https://YOUR_GITHUB_USERNAME.github.io/DeveloperSupportSite/index.html"
+  src="https://saichandakkineni.github.io/Kryptos-issues/index.html"
   width="100%"
   height="900"
   style="border:0;max-width:100%;"
@@ -307,7 +331,7 @@ Same steps on the **Kryptos Support** page:
 
 ```html
 <iframe
-  src="https://YOUR_GITHUB_USERNAME.github.io/DeveloperSupportSite/kryptos/index.html"
+  src="https://saichandakkineni.github.io/Kryptos-issues/kryptos/index.html"
   width="100%"
   height="2400"
   style="border:0;max-width:100%;"
@@ -324,7 +348,7 @@ On the **Kryptos Privacy** page:
 
 ```html
 <iframe
-  src="https://YOUR_GITHUB_USERNAME.github.io/DeveloperSupportSite/kryptos/privacy.html"
+  src="https://saichandakkineni.github.io/Kryptos-issues/kryptos/privacy.html"
   width="100%"
   height="3200"
   style="border:0;max-width:100%;"
