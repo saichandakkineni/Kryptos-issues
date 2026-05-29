@@ -92,36 +92,92 @@ function thankYouUrl(config, app) {
   return `${supportUrl}${separator}sent=1`;
 }
 
+function formSubmitAjaxUrl(endpoint) {
+  return endpoint.replace(/^https:\/\/formsubmit\.co\//i, "https://formsubmit.co/ajax/");
+}
+
+function showFormSuccess(form, status) {
+  status.hidden = false;
+  status.className = "form-status success";
+  status.textContent =
+    "Thank you. Your message was sent. We will reply to the email you provided.";
+  form.reset();
+}
+
 function initContactForm(config, app) {
   const form = document.querySelector("#contact-form");
   const status = document.querySelector("#form-status");
+  const submitBtn = form?.querySelector('[type="submit"]');
   if (!form) return;
 
   form.setAttribute("method", "post");
   form.setAttribute("action", config.formSubmitEndpoint);
-  form.setAttribute("target", "_top");
   form.setAttribute("enctype", "application/x-www-form-urlencoded");
-  form.action = config.formSubmitEndpoint;
-  form.method = "post";
-  form.target = "_top";
   form.querySelector('[name="_subject"]').value = `${app.name} Support Request`;
   form.querySelector('[name="_next"]').value = thankYouUrl(config, app);
   form.querySelector('[name="_template"]').value = "table";
 
   const params = new URLSearchParams(window.location.search);
   if (params.get("sent") === "1") {
-    status.hidden = false;
-    status.className = "form-status success";
-    status.textContent = "Thank you. Your message was sent. We will reply to the email you provided.";
+    showFormSuccess(form, status);
   }
 
-  form.addEventListener("submit", (event) => {
+  const ajaxUrl = formSubmitAjaxUrl(config.formSubmitEndpoint);
+  const inIframe = window.self !== window.top;
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
     const email = form.querySelector('[name="email"]').value.trim();
     if (!email || !email.includes("@")) {
-      event.preventDefault();
       status.hidden = false;
       status.className = "form-status error";
       status.textContent = "Please enter a valid email address so we can reply.";
+      return;
+    }
+
+    submitBtn.disabled = true;
+    status.hidden = false;
+    status.className = "form-status";
+    status.textContent = "Sending…";
+
+    try {
+      const response = await fetch(ajaxUrl, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { Accept: "application/json" },
+      });
+
+      let payload = {};
+      try {
+        payload = await response.json();
+      } catch {
+        /* non-JSON body */
+      }
+
+      const ok =
+        response.ok &&
+        (payload.success === true || payload.success === "true" || response.status === 200);
+
+      if (!ok) {
+        throw new Error(
+          payload.message || "The server could not send your message. Please try again."
+        );
+      }
+
+      if (inIframe) {
+        showFormSuccess(form, status);
+      } else {
+        window.location.href = thankYouUrl(config, app);
+        return;
+      }
+    } catch (error) {
+      console.error(error);
+      status.hidden = false;
+      status.className = "form-status error";
+      status.textContent = `Could not send your message. Email us at ${config.supportEmail}.`;
+    } finally {
+      submitBtn.disabled = false;
     }
   });
 }
