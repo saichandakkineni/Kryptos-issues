@@ -1,4 +1,5 @@
 import siteConfigInline from "../../data/site-config.json";
+import kryptosLogoUrl from "../images/kryptos-logo.png";
 
 const THEME_KEY = "dss-theme";
 const isGoogleSites = import.meta.env.VITE_GOOGLE_SITES === "true";
@@ -118,6 +119,16 @@ function applyTheme(theme) {
   });
 }
 
+function renderBrandMark(config, appName) {
+  const label = appName || "Developer Support";
+  const showKryptosLogo =
+    label === "Kryptos" || config.publisher === "Kryptos" || config.apps?.some((a) => a.id === "kryptos");
+  if (showKryptosLogo) {
+    return `<img class="brand-logo" src="${kryptosLogoUrl}" alt="" width="32" height="32" decoding="async" />`;
+  }
+  return `<span class="brand-icon" aria-hidden="true">◆</span>`;
+}
+
 export function renderHeader(config, { appName, supportPath, privacyPath, homePath = "/" }) {
   const linkAttrs = useGoogleSitesUrls(config) ? ' target="_top" rel="noopener"' : "";
   const brandLabel = appName || "Developer Support";
@@ -129,7 +140,7 @@ export function renderHeader(config, { appName, supportPath, privacyPath, homePa
     <header class="site-header">
       <div class="header-inner">
         <a class="brand" href="${homeHref}"${linkAttrs}>
-          <span class="brand-icon" aria-hidden="true">◆</span>
+          ${renderBrandMark(config, brandLabel)}
           <span>${brandLabel}</span>
         </a>
         <div class="header-actions">
