@@ -11,9 +11,27 @@ export async function loadSiteConfig() {
   return response.json();
 }
 
+/** True when embedded on Google Sites (not when viewing github.io or localhost directly). */
+function useGoogleSitesUrls(config) {
+  if (!isGoogleSites || !config.googleSites?.siteUrl) return false;
+  if (typeof window === "undefined") return true;
+  const host = window.location.hostname;
+  if (host === "localhost" || host === "127.0.0.1" || host.endsWith(".github.io")) {
+    return false;
+  }
+  return true;
+}
+
 /** Link attributes when pages run inside a Google Sites iframe. */
 export function externalLinkAttrs() {
-  return isGoogleSites ? ' target="_top" rel="noopener"' : "";
+  if (!isGoogleSites) return "";
+  if (typeof window !== "undefined") {
+    const host = window.location.hostname;
+    if (host === "localhost" || host === "127.0.0.1" || host.endsWith(".github.io")) {
+      return "";
+    }
+  }
+  return ' target="_top" rel="noopener"';
 }
 
 function joinUrl(base, segment) {
@@ -42,7 +60,7 @@ export function resolvePageUrl(config, path) {
   if (!path) return "#";
   if (/^https?:\/\//i.test(path)) return path;
 
-  if (isGoogleSites && config.googleSites?.siteUrl) {
+  if (useGoogleSitesUrls(config)) {
     if (path === config.paths?.home || path === "/") {
       return googleSitesUrl(config, "home") || path;
     }
@@ -60,9 +78,22 @@ export function resolvePageUrl(config, path) {
   }
 
   if (path.startsWith("/")) {
-    return `${import.meta.env.BASE_URL}${path.slice(1)}`;
+    return toRootRelativeUrl(path.slice(1));
   }
   return path;
+}
+
+/** Avoid kryptos/kryptos/... when already on a page under /kryptos/. */
+function toRootRelativeUrl(rootRelative) {
+  const base = import.meta.env.BASE_URL || "./";
+  if (typeof window !== "undefined") {
+    const pathname = window.location.pathname;
+    if (pathname.includes("/kryptos/") && rootRelative.startsWith("kryptos/")) {
+      const withinKryptos = rootRelative.slice("kryptos/".length);
+      return `${base}${withinKryptos || "index.html"}`;
+    }
+  }
+  return `${base}${rootRelative}`;
 }
 
 export function initThemeToggle(button) {
@@ -88,7 +119,7 @@ function applyTheme(theme) {
 }
 
 export function renderHeader(config, { appName, supportPath, privacyPath, homePath = "/" }) {
-  const linkAttrs = externalLinkAttrs();
+  const linkAttrs = useGoogleSitesUrls(config) ? ' target="_top" rel="noopener"' : "";
   const brandLabel = appName || "Developer Support";
   const homeHref = resolvePageUrl(config, homePath);
   const supportHref = supportPath ? resolvePageUrl(config, supportPath) : null;
@@ -112,7 +143,7 @@ export function renderHeader(config, { appName, supportPath, privacyPath, homePa
 }
 
 export function renderFooter(config, { supportEmail, privacyPath, supportPath }) {
-  const linkAttrs = externalLinkAttrs();
+  const linkAttrs = useGoogleSitesUrls(config) ? ' target="_top" rel="noopener"' : "";
   const year = new Date().getFullYear();
   const supportHref = supportPath ? resolvePageUrl(config, supportPath) : null;
   const privacyHref = privacyPath ? resolvePageUrl(config, privacyPath) : null;

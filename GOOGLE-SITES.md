@@ -51,9 +51,9 @@ GitHub Pages deploy workflow is on `main`. **First run failed** until Pages is e
 - [x] **Step 3** — Edit `data/site-config.json` (first pass)  
 - [x] **Step 4** — Install Node and build locally  
 - [x] **Step 5** — Push code to [Kryptos-issues](https://github.com/saichandakkineni/Kryptos-issues) (includes deploy workflow)  
-- [ ] **Step 6** — Turn on GitHub Pages (Actions) and confirm deploy succeeds — **you are here**  
+- [x] **Step 6** — Turn on GitHub Pages (Actions) and confirm deploy succeeds  
+- [ ] **Step 8** — Add iframe embeds on Google Sites pages — **you are here**  
 - [x] **Step 7** — `embedHost` set to `https://saichandakkineni.github.io/Kryptos-issues` (in repo; CI rebuilds on push)  
-- [ ] **Step 8** — Add iframe embeds on Google Sites pages (after Step 6 URLs work)  
 - [ ] **Step 9** — Publish Google Sites (if not already public)  
 - [ ] **Step 10** — Activate FormSubmit email  
 - [ ] **Step 11** — Test everything  
@@ -452,7 +452,9 @@ If you prefer a plain-text privacy page on Google Sites (no embed):
 
 | Problem | What to try |
 |---------|-------------|
+| **404 `.../kryptos/kryptos/privacy.html`** | Wrong URL. Use `.../kryptos/privacy.html` (only one `kryptos`). Push latest code if header links still double up. |
 | **Blank embed on Google Sites** | Open the `github.io` URL directly. If it fails, fix GitHub Pages first (Step 6). If it works, re-insert the iframe with the correct URL. |
+| **Header links jump to empty Google Sites** | Expected until Step 8 embeds exist. On `github.io`, links stay on GitHub after the path fix; inside Google Sites iframe, links correctly open your `sites.google.com` pages. |
 | **404 on github.io** | Repo must be **public**. Check **Settings → Pages → Source: GitHub Actions**. Re-run the workflow under **Actions**. |
 | **Actions workflow failed** | Open the failed run → read the red step log. Often missing `npm install` or Node issue — fix and push again. |
 | **Links open wrong page** | `siteUrl` and `pages.*` in `site-config.json` must match published Google Sites URLs exactly. Rebuild and push after fixing. |
