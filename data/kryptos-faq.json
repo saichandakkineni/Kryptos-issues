@@ -1,0 +1,77 @@
+[
+  {
+    "category": "Getting started",
+    "question": "How do I create my vault?",
+    "answer": "Open Kryptos and follow onboarding: choose a strong master password (this cannot be recovered if lost), optionally enable Face ID or Touch ID, then add your first credential from the + button on the Favourites or Categories tab."
+  },
+  {
+    "category": "Getting started",
+    "question": "I forgot my master password. Can you reset it?",
+    "answer": "No. Kryptos is zero-knowledge: your master password never leaves your device and we cannot reset or recover it. If you have an encrypted backup in iCloud Drive or Google Drive and remember the password, reinstall the app and restore from cloud. Otherwise you must create a new vault (existing encrypted data cannot be decrypted without the password)."
+  },
+  {
+    "category": "Getting started",
+    "question": "Do I need an account to use Kryptos?",
+    "answer": "No. There is no Kryptos login or server account. Your vault lives on your device. Optional sync uses your own Apple ID (iCloud) or Google account (Google Drive)."
+  },
+  {
+    "category": "Sync & backup",
+    "question": "How does iCloud sync work?",
+    "answer": "When enabled in Settings, Kryptos stores an encrypted vault file (Kryptos.vault) in your iCloud Drive app container. Only the encrypted blob is uploaded—we never receive your master password or decrypted data. Both devices must use the same master password to unlock the same vault."
+  },
+  {
+    "category": "Sync & backup",
+    "question": "How do I set up Google Drive sync?",
+    "answer": "Go to Settings → Sync, choose Google Drive, and sign in with Google when prompted. OAuth tokens are stored encrypted inside your vault. The same encrypted vault file is uploaded to your Google Drive app data folder."
+  },
+  {
+    "category": "Sync & backup",
+    "question": "Sync is not updating between devices",
+    "answer": "Ensure sync is enabled on both devices, you are signed into the same iCloud or Google account, and both devices have network access. Open Kryptos on each device after a change to trigger a sync. If problems persist, check that iCloud Drive or Google Drive has storage available and that Kryptos has network permission in iOS Settings."
+  },
+  {
+    "category": "AutoFill",
+    "question": "How do I enable Password AutoFill?",
+    "answer": "Open Settings → AutoFill in Kryptos for a step-by-step guide. In iOS Settings → Apps → Passwords (or Passwords & Accounts on older iOS), set Kryptos as your AutoFill provider. Unlock Kryptos with biometrics or your master password when Safari or another app requests credentials."
+  },
+  {
+    "category": "AutoFill",
+    "question": "AutoFill does not show my saved logins",
+    "answer": "Confirm the login URL domain matches the website you are on (e.g. example.com vs www.example.com). Ensure you unlocked Kryptos recently. Re-enable the AutoFill extension in iOS Settings if it was disabled. For passkeys, your device and the website must support passkeys."
+  },
+  {
+    "category": "Security",
+    "question": "Is my data sent to Kryptos servers?",
+    "answer": "No. We do not operate vault servers. Passwords are encrypted on your device with AES-256-GCM; keys use Argon2id. Optional network use includes breach checks (k-anonymity to Have I Been Pwned), favicon lookups (domain only), and sync to your own cloud account."
+  },
+  {
+    "category": "Security",
+    "question": "What is the Security Dashboard?",
+    "answer": "The Security Dashboard summarizes weak or reused passwords, items affected by known breaches (when you run a breach check), and suggestions to improve your vault hygiene. Breach checks send only the first five characters of a password hash, never the full password."
+  },
+  {
+    "category": "Security",
+    "question": "How do I export or delete my vault?",
+    "answer": "Use in-app settings for vault export or wipe where available. Deleting the app removes local data; copies in iCloud or Google Drive remain until you delete them in those services. To fully remove cloud copies, disconnect sync and delete Kryptos.vault from iCloud Drive or Google Drive."
+  },
+  {
+    "category": "Troubleshooting",
+    "question": "The app locks too quickly",
+    "answer": "Adjust auto-lock timeout in Settings → Security. Backgrounding the app or switching apps may trigger lock based on your chosen interval."
+  },
+  {
+    "category": "Troubleshooting",
+    "question": "Biometrics stopped working",
+    "answer": "Toggle biometrics off and on in Kryptos Settings, or re-enroll in iOS Settings → Face ID & Passcode. You can always unlock with your master password."
+  },
+  {
+    "category": "Troubleshooting",
+    "question": "Passkey registration or sign-in fails",
+    "answer": "The website must support passkeys and the domain must match what you saved. Some sites require Associated Domains configuration that only works for published apps. Test on a known passkey-compatible site. On unsupported configurations, use a traditional password entry instead."
+  },
+  {
+    "category": "Privacy",
+    "question": "Where is the privacy policy?",
+    "answer": "Read our full privacy policy on this site at the Privacy Policy link in the footer. It explains what data stays on your device, optional cloud sync, and limited network features."
+  }
+]

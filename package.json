@@ -1,0 +1,17 @@
+{
+  "name": "developer-support-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "App Store–compliant support and privacy pages",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:google-sites": "node scripts/build-google-sites.mjs",
+    "preview": "vite preview",
+    "preview:google-sites": "vite preview --outDir dist-google-sites"
+  },
+  "devDependencies": {
+    "vite": "^6.3.5",
+    "vite-plugin-singlefile": "^2.2.0"
+  }
+}

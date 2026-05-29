@@ -1,0 +1,30 @@
+{
+  "publisher": "Kryptos",
+  "supportEmail": "kryptos.enquiry@gmail.com",
+  "formSubmitEndpoint": "https://formsubmit.co/kryptos.enquiry@gmail.com",
+  "paths": {
+    "home": "/"
+  },
+  "googleSites": {
+    "siteUrl": "https://sites.google.com/view/info-kryptos",
+    "embedHost": "https://saichandakkineni.github.io/Kryptos-issues",
+    "pages": {
+      "home": "",
+      "kryptosSupport": "/kryptos-support",
+      "kryptosPrivacy": "/kryptos-privacy"
+    }
+  },
+  "apps": [
+    {
+      "id": "kryptos",
+      "name": "Kryptos",
+      "tagline": "Encrypted password vault for iOS",
+      "platforms": ["iOS"],
+      "supportPath": "/kryptos/",
+      "privacyPath": "/kryptos/privacy.html",
+      "faqData": "/data/kryptos-faq.json",
+      "accent": "#5b8def",
+      "icon": "shield"
+    }
+  ]
+}

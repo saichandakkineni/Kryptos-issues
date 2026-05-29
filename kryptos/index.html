@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Kryptos iOS support: FAQs, troubleshooting, and contact our team."
+    />
+    <title>Kryptos — Support</title>
+    <link rel="stylesheet" href="../assets/css/styles.css" />
+  </head>
+  <body data-app-id="kryptos">
+    <div id="site-header"></div>
+    <main class="page-main">
+      <section class="hero">
+        <h1>Kryptos Support</h1>
+        <p>
+          Privacy-first password manager for iOS. Search our help articles or send us a message—we
+          respond by email, not through GitHub.
+        </p>
+      </section>
+
+      <div class="grid-2">
+        <section class="card" aria-labelledby="faq-heading">
+          <h2 id="faq-heading">Help articles</h2>
+          <p class="faq-meta" id="faq-count">Loading…</p>
+          <div class="search-row">
+            <label class="sr-only" for="faq-search">Search help articles</label>
+            <input
+              id="faq-search"
+              type="search"
+              placeholder="Search FAQs (e.g. AutoFill, sync, master password)"
+              autocomplete="off"
+            />
+          </div>
+          <div class="form-field">
+            <label for="faq-category">Filter by topic</label>
+            <select id="faq-category" aria-label="Filter by topic"></select>
+          </div>
+          <div id="faq-list" class="faq-list" aria-live="polite"></div>
+        </section>
+
+        <aside>
+          <section class="card contact-sidebar" aria-labelledby="contact-heading">
+            <h2 id="contact-heading">Contact support</h2>
+            <p>
+              Fill out the form and we will email you back. Include your iOS version and a short
+              description of the issue.
+            </p>
+            <p>
+              Email:
+              <a id="support-email" class="contact-email" href="mailto:kryptos.enquiry@gmail.com"
+                >kryptos.enquiry@gmail.com</a
+              >
+            </p>
+
+            <form id="contact-form" method="POST">
+              <input type="hidden" name="_subject" value="Kryptos Support Request" />
+              <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="_next" value="" />
+
+              <div class="form-field">
+                <label for="name">Name</label>
+                <input id="name" name="name" type="text" required autocomplete="name" />
+              </div>
+              <div class="form-field">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" required autocomplete="email" />
+              </div>
+              <div class="form-field">
+                <label for="topic">Topic</label>
+                <select id="topic" name="topic" required>
+                  <option value="">Select a topic</option>
+                  <option>Account &amp; master password</option>
+                  <option>Sync (iCloud / Google Drive)</option>
+                  <option>AutoFill &amp; passkeys</option>
+                  <option>Security &amp; breach check</option>
+                  <option>Bug report</option>
+                  <option>Feature request</option>
+                  <option>Privacy request</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label for="ios-version">iOS version (optional)</label>
+                <input id="ios-version" name="ios_version" type="text" placeholder="e.g. iOS 18.4" />
+              </div>
+              <div class="form-field">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" required></textarea>
+                <p class="form-hint">Do not include your master password or vault secrets.</p>
+              </div>
+              <button class="btn" type="submit">Send message</button>
+              <div id="form-status" class="form-status" hidden role="status"></div>
+            </form>
+          </section>
+        </aside>
+      </div>
+    </main>
+    <div id="site-footer"></div>
+    <script type="module" src="../assets/js/support.js"></script>
+  </body>
+</html>
