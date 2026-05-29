@@ -459,6 +459,7 @@ If you prefer a plain-text privacy page on Google Sites (no embed):
 | **Actions workflow failed** | Open the failed run → read the red step log. Often missing `npm install` or Node issue — fix and push again. |
 | **Links open wrong page** | `siteUrl` and `pages.*` in `site-config.json` must match published Google Sites URLs exactly. Rebuild and push after fixing. |
 | **Form never arrives** | Confirm FormSubmit activation in `kryptos.enquiry@gmail.com`. Check spam. Test from the **published** site, not localhost. |
+| **“Form should POST” (FormSubmit)** | Usually iframe + GET. Form uses `method="post"` and `target="_top"`. Hard-refresh after deploy; don’t open the FormSubmit URL directly in the browser. |
 | **Thank-you page wrong** | Rebuild after updating `googleSites` URLs (`npm run build:google-sites` + push). |
 | **`npm: command not found`** | Install Node.js LTS and restart Terminal. |
 

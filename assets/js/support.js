@@ -97,7 +97,13 @@ function initContactForm(config, app) {
   const status = document.querySelector("#form-status");
   if (!form) return;
 
+  form.setAttribute("method", "post");
+  form.setAttribute("action", config.formSubmitEndpoint);
+  form.setAttribute("target", "_top");
+  form.setAttribute("enctype", "application/x-www-form-urlencoded");
   form.action = config.formSubmitEndpoint;
+  form.method = "post";
+  form.target = "_top";
   form.querySelector('[name="_subject"]').value = `${app.name} Support Request`;
   form.querySelector('[name="_next"]').value = thankYouUrl(config, app);
   form.querySelector('[name="_template"]').value = "table";
